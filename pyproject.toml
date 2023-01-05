@@ -1,0 +1,22 @@
+[tool.poetry]
+name = "hanukkah-of-data"
+version = "0.1.1"
+description = "Submissions for Hanukkah of Data"
+authors = ["Stefan Langenbach"]
+license = "MIT"
+readme = "README.md"
+packages = [{include = "hanukkah_of_data"}]
+
+[tool.poetry.dependencies]
+python = "^3.9"
+ipykernel = "^6.19.4"
+pandas = "^1.5.2"
+
+
+[tool.poetry.group.dev.dependencies]
+black = "^22.12.0"
+isort = "^5.11.4"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
