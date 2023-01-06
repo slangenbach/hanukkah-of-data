@@ -3,6 +3,8 @@ import urllib.request
 import pandas as pd
 
 from hanukkah_of_data.constants import (
+    DATE_COLUMN_MAP,
+    DTYPES_MAP,
     TWENTY_TWENTY_TWO_DATA_PATH,
     TWENTY_TWENTY_TWO_URL,
 )
@@ -26,7 +28,9 @@ def load_data() -> dict[str, pd.DataFrame]:
 
     for file in files:
         fname = file.stem.removeprefix("noahs-")
-        dataframes[fname] = pd.read_csv(file)
+        dataframes[fname] = pd.read_csv(
+            file, dtype=DTYPES_MAP[fname], parse_dates=DATE_COLUMN_MAP[fname]
+        )
 
     return dataframes
 
