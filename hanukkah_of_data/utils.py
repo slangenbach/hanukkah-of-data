@@ -1,4 +1,5 @@
 import urllib.request
+from zipfile import ZipFile
 
 import pandas as pd
 
@@ -6,6 +7,7 @@ from hanukkah_of_data.constants import (
     DATE_COLUMN_MAP,
     DTYPES_MAP,
     TWENTY_TWENTY_TWO_DATA_PATH,
+    TWENTY_TWENTY_TWO_PWD,
     TWENTY_TWENTY_TWO_URL,
 )
 
@@ -20,6 +22,20 @@ def download_data() -> None:
         )
     else:
         print(f"Data already downloaded to {TWENTY_TWENTY_TWO_DATA_PATH}/data.zip")
+
+
+def extract_data() -> None:
+    if TWENTY_TWENTY_TWO_DATA_PATH.joinpath("data.zip").exists():
+        if not list(TWENTY_TWENTY_TWO_DATA_PATH.glob("*.csv")):
+            with ZipFile(TWENTY_TWENTY_TWO_DATA_PATH.joinpath("data.zip")) as f:
+                f.extractall(
+                    path=TWENTY_TWENTY_TWO_DATA_PATH,
+                    pwd=str.encode(TWENTY_TWENTY_TWO_PWD),
+                )
+        else:
+            print("Data has already been extracted.")
+    else:
+        print(f"File 'data.zip' does not exist in {TWENTY_TWENTY_TWO_DATA_PATH}")
 
 
 def load_data() -> dict[str, pd.DataFrame]:
