@@ -1,6 +1,6 @@
 # Hanukkah of Data
 
-Solutions to puzzles for [Hanukkah of Data](https://hanukkah.bluebird.sh/5783/)
+Solutions to puzzles for [Hanukkah of Data](https://hanukkah.bluebird.sh/5783/).
 
 # Prerequisites
 
@@ -19,4 +19,8 @@ Activate virtual environment
 
 Bootstrap project
 
-    tbd
+    python -m hanukkah_of_data.bootstrap
+
+Optional: Install pre-commit hooks
+
+    pre-commit install

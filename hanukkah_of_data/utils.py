@@ -1,3 +1,4 @@
+import logging
 import urllib.request
 from zipfile import ZipFile
 
@@ -13,29 +14,35 @@ from hanukkah_of_data.constants import (
 
 
 def download_data() -> None:
+    TWENTY_TWENTY_TWO_DATA_PATH.mkdir(exist_ok=True)
     if not TWENTY_TWENTY_TWO_DATA_PATH.joinpath("data.zip").exists():
-        print(
+        logging.info(
             f"Downloading data from {TWENTY_TWENTY_TWO_URL} to {TWENTY_TWENTY_TWO_DATA_PATH}/data.zip"
         )
         urllib.request.urlretrieve(
             TWENTY_TWENTY_TWO_URL, TWENTY_TWENTY_TWO_DATA_PATH.joinpath("data.zip")
         )
     else:
-        print(f"Data already downloaded to {TWENTY_TWENTY_TWO_DATA_PATH}/data.zip")
+        logging.info(
+            f"Data has already been downloaded to {TWENTY_TWENTY_TWO_DATA_PATH}/data.zip"
+        )
 
 
 def extract_data() -> None:
     if TWENTY_TWENTY_TWO_DATA_PATH.joinpath("data.zip").exists():
         if not list(TWENTY_TWENTY_TWO_DATA_PATH.glob("*.csv")):
+            logging.info(f"Extracing data.zip to {TWENTY_TWENTY_TWO_DATA_PATH}")
             with ZipFile(TWENTY_TWENTY_TWO_DATA_PATH.joinpath("data.zip")) as f:
                 f.extractall(
                     path=TWENTY_TWENTY_TWO_DATA_PATH,
                     pwd=str.encode(TWENTY_TWENTY_TWO_PWD),
                 )
         else:
-            print("Data has already been extracted.")
+            logging.info("Data has already been extracted.")
     else:
-        print(f"File 'data.zip' does not exist in {TWENTY_TWENTY_TWO_DATA_PATH}")
+        logging.warning(
+            f"File 'data.zip' does not exist in {TWENTY_TWENTY_TWO_DATA_PATH}"
+        )
 
 
 def load_data() -> dict[str, pd.DataFrame]:
