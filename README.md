@@ -7,7 +7,7 @@ Solutions to puzzles for [Hanukkah of Data](https://hanukkah.bluebird.sh/5783/).
 * Python 3.9+
 * Poetry 1.2.2+
 
-# Usage
+# Installation
 
 Install dependencies
 
@@ -24,3 +24,7 @@ Download and extract data
 Optional: Install pre-commit hooks
 
     pre-commit install
+
+# Usage
+
+Open any of the Jupyter notebooks and run it from top to bottom: Happy puzzeling :octocat:
