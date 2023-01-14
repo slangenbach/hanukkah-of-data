@@ -17,7 +17,7 @@ Activate virtual environment
 
     poetry shell
 
-Bootstrap project
+Download and extract data
 
     python -m hanukkah_of_data.bootstrap
 
