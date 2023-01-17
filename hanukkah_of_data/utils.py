@@ -4,50 +4,43 @@ from zipfile import ZipFile
 
 import pandas as pd
 
-from hanukkah_of_data.constants import (
-    DATE_COLUMN_MAP,
-    DTYPES_MAP,
-    TWENTY_TWENTY_TWO_DATA_PATH,
-    TWENTY_TWENTY_TWO_PWD,
-    TWENTY_TWENTY_TWO_URL,
-)
+from hanukkah_of_data.constants import DATE_COLUMN_MAP, DTYPES_MAP, YEARS_MAP
 
 
-def download_data() -> None:
-    TWENTY_TWENTY_TWO_DATA_PATH.mkdir(exist_ok=True)
-    if not TWENTY_TWENTY_TWO_DATA_PATH.joinpath("data.zip").exists():
-        logging.info(
-            f"Downloading data from {TWENTY_TWENTY_TWO_URL} to {TWENTY_TWENTY_TWO_DATA_PATH}/data.zip"
-        )
-        urllib.request.urlretrieve(
-            TWENTY_TWENTY_TWO_URL, TWENTY_TWENTY_TWO_DATA_PATH.joinpath("data.zip")
-        )
+def download_data(year: str) -> None:
+    data_path = YEARS_MAP[year]["data_path"]
+    url = YEARS_MAP[year]["url"]
+
+    data_path.mkdir(exist_ok=True)
+    if not data_path.joinpath("data.zip").exists():
+        logging.info(f"Downloading data from {url} to {data_path}/data.zip")
+        urllib.request.urlretrieve(url, data_path.joinpath("data.zip"))
     else:
-        logging.info(
-            f"Data has already been downloaded to {TWENTY_TWENTY_TWO_DATA_PATH}/data.zip"
-        )
+        logging.info(f"Data has already been downloaded to {data_path}/data.zip")
 
 
-def extract_data() -> None:
-    if TWENTY_TWENTY_TWO_DATA_PATH.joinpath("data.zip").exists():
-        if not list(TWENTY_TWENTY_TWO_DATA_PATH.glob("*.csv")):
-            logging.info(f"Extracing data.zip to {TWENTY_TWENTY_TWO_DATA_PATH}")
-            with ZipFile(TWENTY_TWENTY_TWO_DATA_PATH.joinpath("data.zip")) as f:
+def extract_data(year: str) -> None:
+    data_path = YEARS_MAP[year]["data_path"]
+    pwd = YEARS_MAP[year]["pwd"]
+
+    if data_path.joinpath("data.zip").exists():
+        if not list(data_path.glob("*.csv")):
+            logging.info(f"Extracing data.zip to {data_path}")
+            with ZipFile(data_path.joinpath("data.zip")) as f:
                 f.extractall(
-                    path=TWENTY_TWENTY_TWO_DATA_PATH,
-                    pwd=str.encode(TWENTY_TWENTY_TWO_PWD),
+                    path=data_path,
+                    pwd=str.encode(pwd),
                 )
         else:
             logging.info("Data has already been extracted.")
     else:
-        logging.warning(
-            f"File 'data.zip' does not exist in {TWENTY_TWENTY_TWO_DATA_PATH}"
-        )
+        logging.warning(f"File 'data.zip' does not exist in {data_path}")
 
 
-def load_data() -> dict[str, pd.DataFrame]:
+def load_data(year: str = "5777") -> dict[str, pd.DataFrame]:
+    data_path = YEARS_MAP[year]["data_path"]
     dataframes = {}
-    files = TWENTY_TWENTY_TWO_DATA_PATH.glob("*.csv")
+    files = data_path.glob("*.csv")
 
     for file in files:
         fname = file.stem.removeprefix("noahs-")

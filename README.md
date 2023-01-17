@@ -17,9 +17,9 @@ Activate virtual environment
 
     poetry shell
 
-Download and extract data
+Download and extract data for
 
-    python -m hanukkah_of_data.bootstrap
+    python -m hanukkah_of_data.bootstrap 5777
 
 Optional: Install pre-commit hooks
 

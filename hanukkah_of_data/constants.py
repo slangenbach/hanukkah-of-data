@@ -4,8 +4,15 @@ ROOT_PATH = Path(__file__).parent.parent
 PACKAGE_PATH = ROOT_PATH / "hanukkah_of_data"
 TWENTY_TWENTY_TWO_PATH = PACKAGE_PATH / "twenty_twenty_two"
 TWENTY_TWENTY_TWO_DATA_PATH = TWENTY_TWENTY_TWO_PATH / "data"
-TWENTY_TWENTY_TWO_URL = "https://hanukkah.bluebird.sh/5783/noahs-csv.zip"
-TWENTY_TWENTY_TWO_PWD = "5777"
+
+YEARS_MAP = {
+    "5777": {
+        "local_path": TWENTY_TWENTY_TWO_PATH,
+        "data_path": TWENTY_TWENTY_TWO_DATA_PATH,
+        "url": "https://hanukkah.bluebird.sh/5783/noahs-csv.zip",
+        "pwd": "5777",
+    }
+}
 
 DTYPES_MAP = {
     "customers": {
